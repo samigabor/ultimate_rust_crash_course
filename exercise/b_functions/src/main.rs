@@ -1,5 +1,4 @@
-// Silence some warnings so they don't distract from the exercise.
-#![allow(unused_variables)]
+use b_functions::{area_of, volume};
 
 fn main() {
     let width = 4;
@@ -13,7 +12,3 @@ fn main() {
     
     println!("Volume is {}", volume(width, height, depth));
 }
-
-fn area_of(x: i32, y: i32) -> i32 { x * y }
-
-fn volume(x: i32, y: i32, z: i32) -> i32 { x * y * z }
