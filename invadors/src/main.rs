@@ -49,8 +49,11 @@ fn main() -> Result<(), Box<dyn Error>> {
 
     // Game loop
     let mut player = invadors::player::Player::new();
+    let mut instant = std::time::Instant::now();
     'gameloop: loop {
         // Per-frame init
+        let delta = instant.elapsed();
+        instant = std::time::Instant::now();
         let mut curr_frame = frame::new_frame();
 
         // Input
@@ -65,6 +68,11 @@ fn main() -> Result<(), Box<dyn Error>> {
                         player.move_right();
                         audio.play("move");
                     }
+                    KeyCode::Char(' ') => {
+                        if player.shoot() {
+                            audio.play("pew");
+                        }
+                    }
                     KeyCode::Char('q') => {
                         audio.play("lose");
                         break 'gameloop;
@@ -73,6 +81,9 @@ fn main() -> Result<(), Box<dyn Error>> {
                 }
             }
         }
+
+        // Updates
+        player.update(delta);
 
         // Dreaw & render
         player.draw(&mut curr_frame);
